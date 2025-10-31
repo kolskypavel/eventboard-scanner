@@ -1,0 +1,26 @@
+CREATE TABLE ticket (
+  id TEXT NOT NULL PRIMARY KEY,
+  code TEXT NOT NULL,
+  eventId TEXT NOT NULL,
+  checked INTEGER NOT NULL DEFAULT 0,
+  holderName TEXT
+);
+
+selectAll:
+SELECT * FROM ticket;
+
+selectByCode:
+SELECT * FROM ticket WHERE code = ?;
+
+insertTicket:
+INSERT OR REPLACE INTO ticket(id, code, eventId, checked, holderName) VALUES(?, ?, ?, ?, ?);
+
+updateChecked:
+UPDATE ticket SET checked = ? WHERE id = ?;
+
+countCheckedByEvent:
+SELECT COUNT(*) AS count FROM ticket WHERE eventId = ? AND checked = 1;
+
+countAllByEvent:
+SELECT COUNT(*) AS count FROM ticket WHERE eventId = ?;
+

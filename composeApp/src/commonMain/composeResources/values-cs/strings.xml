@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="logo_content_description">Logo EventBoard</string>
+    <string name="code_label">8-místný kód</string>
+    <string name="enter_button">Vstoupit</string>
+    <string name="error_not_valid">Prosím zadejte platný kód</string>
+
+    <!-- Added Czech translations for new strings -->
+    <string name="eventboard">EventBoard</string>
+    <string name="location_label">Místo</string>
+    <string name="detailed_overview">Podrobný přehled</string>
+    <string name="inside_label">Uvnitř</string>
+    <string name="participants_button">Účastníci</string>
+
+    <string name="search_tickets_label">Hledat vstupenky</string>
+    <string name="check_tickets_button">Zkontrolovat vstupenky</string>
+    <string name="no_tickets_found">Nenalezeny žádné vstupenky</string>
+    <string name="check_button">Zkontrolovat</string>
+    <string name="status_inside">Uvnitř</string>
+    <string name="status_outside">Mimo</string>
+
+    <!-- Added Czech translations for participants check view -->
+    <string name="scan_qr_title">Skenovat QR kód</string>
+    <string name="scan_qr_hint">Namířte fotoaparát na QR kód vstupenky</string>
+    <string name="simulate_scan">Simulovat sken</string>
+    <string name="manual_ticket_hint">Číslo vstupenky</string>
+    <string name="manual_check_title">Ruční kontrola</string>
+    <string name="toggle_flash">Blesk</string>
+</resources>

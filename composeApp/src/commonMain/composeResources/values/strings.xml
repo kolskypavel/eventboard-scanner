@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="logo_content_description">EventBoard logo</string>
+    <string name="code_label">6-digit code</string>
+    <string name="enter_button">Enter</string>
+    <string name="error_not_valid">Please enter a valid 6-digit code</string>
+
+    <!-- Added strings for main and tickets views -->
+    <string name="eventboard">EventBoard</string>
+    <string name="location_label">Location</string>
+    <string name="detailed_overview">Detailed overview</string>
+    <string name="inside_label">Inside</string>
+    <string name="participants_button">Participants</string>
+
+    <string name="search_tickets_label">Search tickets</string>
+    <string name="check_tickets_button">Check Tickets</string>
+    <string name="no_tickets_found">No tickets found</string>
+    <string name="check_button">Check</string>
+    <string name="status_inside">Inside</string>
+    <string name="status_outside">Outside</string>
+
+    <!-- Added strings for participants check view -->
+    <string name="scan_qr_title">Scan QR code</string>
+    <string name="scan_qr_hint">Point the camera at a ticket QR code</string>
+    <string name="simulate_scan">Simulate scan</string>
+    <string name="manual_ticket_hint">Ticket number</string>
+    <string name="manual_check_title">Manual check</string>
+    <string name="toggle_flash">Flash</string>
+</resources>
