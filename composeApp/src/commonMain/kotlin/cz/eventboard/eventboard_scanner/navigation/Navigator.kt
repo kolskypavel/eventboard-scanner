@@ -1,4 +1,4 @@
-package cz.eventboard.eventboard_scanner
+package cz.eventboard.eventboard_scanner.navigation
 
 /**
  * Simple in-memory back dispatcher for Compose multiplatform.
@@ -27,4 +27,3 @@ object BackDispatcher {
         return false
     }
 }
-

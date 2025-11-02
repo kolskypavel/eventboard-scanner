@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import cz.eventboard.eventboard_scanner.AppViewModel
 import eventboard_scanner.composeapp.generated.resources.Res
 import eventboard_scanner.composeapp.generated.resources.code_label
 import eventboard_scanner.composeapp.generated.resources.enter_button
@@ -21,12 +22,12 @@ import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 /**
- * Isolated login view. It validates a 6-digit code against `expectedCode` and calls
- * `onLoginSuccess()` when the check passes.
+ * Isolated login view. It validates a 6-digit code using the provided AppViewModel
+ * and calls `onLoginSuccess()` when the check passes.
  */
 @Composable
 fun LoginView(
-    expectedCode: String,
+    viewModel: AppViewModel = AppViewModel(),
     onLoginSuccess: () -> Unit = {}
 ) {
     val logoDesc = stringResource(Res.string.logo_content_description)
@@ -75,7 +76,7 @@ fun LoginView(
 
         Button(onClick = {
             if (code.length == 6) {
-                if (code == expectedCode) {
+                if (viewModel.getEventByCode(code.toInt())) {
                     error = null
                     onLoginSuccess()
                 } else {
@@ -89,4 +90,3 @@ fun LoginView(
         }
     }
 }
-

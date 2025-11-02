@@ -16,40 +16,51 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.font.FontWeight
+import cz.eventboard.eventboard_scanner.AppViewModel
+import cz.eventboard.eventboard_scanner.db.entity.TicketStatus
 
 import org.jetbrains.compose.resources.stringResource
 import eventboard_scanner.composeapp.generated.resources.Res
 import eventboard_scanner.composeapp.generated.resources.search_tickets_label
 import eventboard_scanner.composeapp.generated.resources.no_tickets_found
 import eventboard_scanner.composeapp.generated.resources.check_button
+import eventboard_scanner.composeapp.generated.resources.status_cancelled
 import eventboard_scanner.composeapp.generated.resources.status_inside
+import eventboard_scanner.composeapp.generated.resources.status_invalid
 import eventboard_scanner.composeapp.generated.resources.status_outside
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 /**
  * Tickets list view with a search bar on top (no top-level "Check Tickets" button).
- * - tickets: list of TicketItem
+ * - viewModel: optional AppViewModel to source tickets
+ * - tickets: optional override list of TicketItem
  * - onCheckTicket: callback for checking a single ticket
  */
 
-data class TicketItem(val id: String, val holderName: String, val checkedIn: Boolean = false)
-
 @Composable
 fun TicketsListView(
-    tickets: List<TicketItem>,
-    onCheckTicket: (String) -> Unit = {}
+    viewModel: AppViewModel = AppViewModel(),
+    onCheckTicket: ((Int) -> Unit)? = null
 ) {
-    val queryState = remember { mutableStateOf("") }
-    val qLower = queryState.value.trim().lowercase()
-    val filtered = tickets.filter { t ->
-        qLower.isEmpty() || t.id.lowercase().contains(qLower) || t.holderName.lowercase().contains(qLower)
-    }
-
     val searchLabel = stringResource(Res.string.search_tickets_label)
     val noTicketsText = stringResource(Res.string.no_tickets_found)
     val checkText = stringResource(Res.string.check_button)
     val statusInsideText = stringResource(Res.string.status_inside)
     val statusOutsideText = stringResource(Res.string.status_outside)
+    val statusCancelledText = stringResource(Res.string.status_cancelled)
+    val statusInvalidText = stringResource(Res.string.status_invalid)
+
+    val tickets = viewModel.tickets
+    val queryState = remember { mutableStateOf("") }
+
+    fun getTicketStatus(ticketStatus: TicketStatus): String {
+        return when (ticketStatus) {
+            TicketStatus.CHECKED -> statusInsideText
+            TicketStatus.VALID -> statusOutsideText
+            TicketStatus.INVALID -> statusInvalidText
+            TicketStatus.CANCELLED -> statusCancelledText
+        }
+    }
 
     MaterialTheme {
         Column(
@@ -68,34 +79,42 @@ fun TicketsListView(
                 label = { Text(searchLabel) }
             )
 
-            if (filtered.isEmpty()) {
+            if (tickets.isEmpty()) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                     Text(text = noTicketsText, style = MaterialTheme.typography.bodyLarge)
                 }
             } else {
                 LazyColumn(modifier = Modifier.fillMaxSize()) {
-                    items(filtered, key = { it.id }) { ticket ->
-                        Card(modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 6.dp)
-                        ) {
-                            Row(modifier = Modifier
+                    items(tickets, key = { it.id }) { ticket ->
+                        Card(
+                            modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(12.dp),
+                                .padding(vertical = 6.dp)
+                        ) {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(12.dp),
                                 horizontalArrangement = Arrangement.SpaceBetween,
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Column(modifier = Modifier.weight(1f)) {
-                                    Text(text = ticket.holderName, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.SemiBold)
+                                    Text(
+                                        text = ticket.owner,
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        fontWeight = FontWeight.SemiBold
+                                    )
                                     Spacer(modifier = Modifier.height(4.dp))
                                     Text(text = "ID: ${ticket.id}", style = MaterialTheme.typography.bodyMedium)
                                 }
 
                                 Column(horizontalAlignment = Alignment.End) {
-                                    val statusText = if (ticket.checkedIn) statusInsideText else statusOutsideText
+                                    val statusText = getTicketStatus(ticket.status)
                                     Text(text = statusText, style = MaterialTheme.typography.bodyMedium)
                                     Spacer(modifier = Modifier.height(8.dp))
-                                    Button(onClick = { onCheckTicket(ticket.id) }) {
+                                    Button(onClick = {
+                                        viewModel.checkInTicket(ticket.id)
+                                    }) {
                                         Text(text = checkText)
                                     }
                                 }
@@ -111,10 +130,6 @@ fun TicketsListView(
 @Preview
 @Composable
 fun TicketsListViewPreview() {
-    val sample = listOf(
-        TicketItem(id = "A-001", holderName = "Alice Novak", checkedIn = true),
-        TicketItem(id = "A-002", holderName = "Bob Černý", checkedIn = false),
-        TicketItem(id = "B-101", holderName = "Carmen Ruiz", checkedIn = false),
-    )
-    TicketsListView(tickets = sample, onCheckTicket = {})
+    val vm = AppViewModel().apply { populateSampleData() }
+    TicketsListView(viewModel = vm, onCheckTicket = {})
 }

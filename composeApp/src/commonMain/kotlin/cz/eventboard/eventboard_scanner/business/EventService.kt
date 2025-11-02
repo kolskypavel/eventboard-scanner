@@ -4,8 +4,13 @@ import cz.eventboard.eventboard_scanner.db.entity.Event
 
 class EventService {
 
-    fun getEventByCode(eventCode: Long): Event? {
+    fun getEventByCode(eventCode: Int): Event? {
         // Implement event retrieval logic here
-        return null
+        return getDummyEvent()
+    }
+
+    fun getDummyEvent(): Event {
+        val event = Event()
+         return event
     }
 }

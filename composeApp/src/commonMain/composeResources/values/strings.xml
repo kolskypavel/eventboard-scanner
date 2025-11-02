@@ -18,6 +18,8 @@
     <string name="check_button">Check</string>
     <string name="status_inside">Inside</string>
     <string name="status_outside">Outside</string>
+    <string name="status_invalid">Invalid</string>
+    <string name="status_cancelled">Cancelled</string>
 
     <!-- Added strings for participants check view -->
     <string name="scan_qr_title">Scan QR code</string>
@@ -26,4 +28,17 @@
     <string name="manual_ticket_hint">Ticket number</string>
     <string name="manual_check_title">Manual check</string>
     <string name="toggle_flash">Flash</string>
+
+    <!-- Ticket status screen strings -->
+    <string name="ticket_status_valid">Access granted</string>
+    <string name="ticket_status_checked">Already checked</string>
+    <string name="ticket_status_invalid">Entry denied</string>
+    <string name="ticket_status_cancelled">Cancelled</string>
+
+    <string name="ticket_status_title">Ticket details</string>
+    <string name="ticket_status_code">Code</string>
+    <string name="ticket_status_date">Date</string>
+    <string name="ticket_status_sector">Sector</string>
+    <string name="ticket_status_confirm">CONFIRM ENTRY</string>
+    <string name="ticket_status_continue">CONTINUE</string>
 </resources>

@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import cz.eventboard.eventboard_scanner.db.AndroidDatabaseDriverFactory
 import cz.eventboard.eventboard_scanner.db.DatabaseFactoryProvider
+import cz.eventboard.eventboard_scanner.navigation.BackDispatcher
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

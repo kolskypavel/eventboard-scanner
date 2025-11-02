@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.font.FontWeight
+import cz.eventboard.eventboard_scanner.AppViewModel
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import org.jetbrains.compose.resources.stringResource
@@ -29,28 +30,28 @@ import eventboard_scanner.composeapp.generated.resources.check_tickets_button
  * people are currently inside and a button to navigate to the participants screen.
  *
  * Inputs:
- * - eventName: display name of the event
- * - location: optional location string
- * - insideCount: number of people currently inside
- * - capacity: optional capacity to show alongside insideCount
+ * - viewModel: supplies insideCount and capacity
  * - onParticipants: callback invoked when "Participants" button is pressed
  * - onCheckTickets: callback for the check tickets button
  * - onBack: optional back navigation callback (shown as a small back control)
  */
 @Composable
 fun MainView(
-    eventName: String,
-    location: String? = null,
-    insideCount: Int,
-    capacity: Int? = null,
+    viewModel: AppViewModel = AppViewModel(),
     onParticipants: () -> Unit = {},
     onCheckTickets: () -> Unit = {},
     onBack: () -> Unit = {}
 ) {
+    // Titles are now defined by the screen itself via string resources
+    val eventName = stringResource(Res.string.eventboard)
+    val location = stringResource(Res.string.location_label)
     val detailedOverviewText = stringResource(Res.string.detailed_overview)
     val insideLabelText = stringResource(Res.string.inside_label)
     val participantsText = stringResource(Res.string.participants_button)
     val checkTicketsText = stringResource(Res.string.check_tickets_button)
+
+    val insideCount = viewModel.checkedCount
+    val capacity = viewModel.event
 
     MaterialTheme {
         Column(
@@ -79,7 +80,7 @@ fun MainView(
             ) {
                 Column(modifier = Modifier.padding(16.dp)) {
                     Text(text = eventName, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
-                    if (!location.isNullOrBlank()) {
+                    if (location.isNotBlank()) {
                         Spacer(modifier = Modifier.height(6.dp))
                         Text(text = location, style = MaterialTheme.typography.bodyMedium)
                     }
@@ -126,11 +127,9 @@ fun MainView(
 @Preview
 @Composable
 fun MainViewPreview() {
+    val vm = AppViewModel().apply { populateSampleData() }
     MainView(
-        eventName = stringResource(Res.string.eventboard),
-        location = stringResource(Res.string.location_label),
-        insideCount = 123,
-        capacity = 500,
+        viewModel = vm,
         onParticipants = {},
         onCheckTickets = {},
         onBack = {}

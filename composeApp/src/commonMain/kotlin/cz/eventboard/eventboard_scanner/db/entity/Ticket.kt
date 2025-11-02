@@ -5,6 +5,7 @@ import kotlinx.datetime.LocalDateTime
 class Ticket(
     val eventId: Long,
     val id: Long,
+    val owner: String,
     var status: TicketStatus,
     var lastCheck: LocalDateTime?,
 

@@ -17,7 +17,9 @@
     <string name="no_tickets_found">Nenalezeny žádné vstupenky</string>
     <string name="check_button">Zkontrolovat</string>
     <string name="status_inside">Uvnitř</string>
-    <string name="status_outside">Mimo</string>
+    <string name="status_outside">Venku</string>
+    <string name="status_invalid">Neplatný</string>
+    <string name="status_cancelled">Zrušená</string>
 
     <!-- Added Czech translations for participants check view -->
     <string name="scan_qr_title">Skenovat QR kód</string>
@@ -26,4 +28,17 @@
     <string name="manual_ticket_hint">Číslo vstupenky</string>
     <string name="manual_check_title">Ruční kontrola</string>
     <string name="toggle_flash">Blesk</string>
+
+    <!-- Ticket status strings in Czech -->
+    <string name="ticket_status_valid">Vstup povolen</string>
+    <string name="ticket_status_checked">Vstup již zkontrolován</string>
+    <string name="ticket_status_invalid">Vstup zamítnut</string>
+    <string name="ticket_status_cancelled">Storno</string>
+
+    <string name="ticket_status_title">Detail vstupenky</string>
+    <string name="ticket_status_code">Kód</string>
+    <string name="ticket_status_date">Datum</string>
+    <string name="ticket_status_sector">Sektor</string>
+    <string name="ticket_status_confirm">POTVRDIT VSTUP</string>
+    <string name="ticket_status_continue">POKRAČOVAT</string>
 </resources>
